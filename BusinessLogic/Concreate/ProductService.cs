@@ -54,9 +54,9 @@ namespace BusinessLogic.Concrete
             return new Result<Guid>() { HasError = false, Data = product.Id };
         }
 
-        public async Task<Result> UpdateAsync(ProductWriteDTO model)
+        public async Task<Result> UpdateAsync(Guid id, ProductWriteDTO model)
         {
-            Product? product = await _unitOfWork.Products.GetAsync(Guid.NewGuid()); // model.Id.Value
+            Product? product = await _unitOfWork.Products.GetAsync(id);
             if (product == null)
                 return new Result() { HasError = true, Code = "NOT_FOUND" };
 
@@ -65,7 +65,6 @@ namespace BusinessLogic.Concrete
             product.UnitPrice = model.UnitPrice;
 
             _unitOfWork.Products.Update(product);
-
 
             await _unitOfWork.SaveAsync();
             return new Result() { HasError = false };

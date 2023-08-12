@@ -24,34 +24,8 @@ namespace WebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
-
-            //MapperConfiguration config = new MapperConfiguration(cfg =>
-            //{
-            //    cfg.CreateMap<Product, ProductReadDTO>().ReverseMap();
-
-            //    cfg.CreateMap<ProductWriteDTO, Product>()
-            //        .ForMember(dest => dest.Id, src => src.Ignore())
-            //        .ForMember(dest => dest.Quantity, src => src.Ignore())
-            //        .ForMember(dest => dest.Purchases, src => src.Ignore())
-            //        .ForMember(dest => dest.Sales, src => src.Ignore())
-            //        .ForMember(dest => dest.CreatedBy, src => src.Ignore())
-            //        .ForMember(dest => dest.CreationDate, src => src.Ignore())
-            //        .ForMember(dest => dest.ModifiedBy, src => src.Ignore())
-            //        .ForMember(dest => dest.ModifiedDate, src => src.Ignore())
-            //        .ForMember(dest => dest.IsDeleted, src => src.Ignore());
-
-
-
-            //    cfg.CreateMap<Sale, SaleDTO>();
-            //    cfg.CreateMap<Purchase, PurchaseDTO>();
-            //});
-
-            //config.AssertConfigurationIsValid();
-
-            //IMapper mapper = config.CreateMapper();
-            //builder.Services.AddSingleton(mapper);
-
 
             builder.Services.AddDbContext<InventoryDbContext>(options =>
             {

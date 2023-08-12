@@ -28,9 +28,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet(Name = "GetProducts")]
-        public async Task<IEnumerable<Product>> Get()
+        public async Task<IEnumerable<ProductReadDTO>> Get()
         {
-            return await _unitOfWork.Products.GetAllAsync();
+            return await _productService.GetAllAsync();
         }
 
         [HttpPost(Name = "CreateProduct")]
@@ -55,6 +55,44 @@ namespace WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, result.Code);
 
             return Ok(result.Data);
+        }
+
+        [HttpPut(Name = "UpdateProduct")]
+        public async Task<IActionResult> Update(Guid id, ProductWriteDTO model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Get validation errors from ModelState
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList();
+
+                return BadRequest(new Result
+                {
+                    HasError = true,
+                    Code = "VALIDATION_ERROR",
+                    Message = "One or more validation errors occurred.",
+                    Data = errors
+                });
+            }
+
+            Result result = await _productService.UpdateAsync(id, model);
+            if (result.HasError)
+                return StatusCode(StatusCodes.Status500InternalServerError, result.Code);
+
+            return Ok(result.Data);
+        }
+
+
+        [HttpDelete(Name = "DeleteProduct")]
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (!id.HasValue)
+                return BadRequest("Id required");
+
+            Result result = await _productService.DeleteAsync(id.Value);
+            if (result.HasError)
+                return StatusCode(StatusCodes.Status500InternalServerError, result.Code);
+
+            return Ok();
         }
     }
 }

@@ -65,7 +65,7 @@ namespace DataAccess.Repositories.Concrete
 
         public async Task<IEnumerable<T>> GetAllWithIncludeAsync(params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _dbSet.Where(x => !x.IsDeleted);
 
             foreach (var includeProperty in includeProperties)
             {
@@ -77,19 +77,24 @@ namespace DataAccess.Repositories.Concrete
 
         public async Task<IEnumerable<T>> GetManyAsync(Expression<Func<T, bool>> predicate)
         {
-            return await _dbSet.Where(predicate).Where(x => x.IsDeleted == false).ToListAsync();
+            return await _dbSet
+                .Where(x => x.IsDeleted == false)
+                .Where(predicate)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetManyWithIncludeAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> query = _dbSet;
+            IQueryable<T> query = _dbSet.Where(x => !x.IsDeleted);
 
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);
             }
 
-            return await query.Where(predicate).ToListAsync();
+            return await query
+                .Where(predicate)
+                .ToListAsync();
         }
         #endregion
 

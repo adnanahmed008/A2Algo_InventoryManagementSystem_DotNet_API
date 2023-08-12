@@ -14,7 +14,7 @@ namespace BusinessLogic.Interfaces
         Task<ProductReadDTO> GetAsync(Guid id);
         Task<IEnumerable<ProductReadDTO>> GetAllAsync();
         Task<Result<Guid>> CreateAsync(ProductWriteDTO model);
-        Task<Result> UpdateAsync(ProductWriteDTO model);
+        Task<Result> UpdateAsync(Guid id, ProductWriteDTO model);
         Task<Result> DeleteAsync(Guid id);
     }
 }
