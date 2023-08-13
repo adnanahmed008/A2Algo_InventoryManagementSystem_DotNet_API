@@ -21,5 +21,8 @@ namespace Core.Entities
 
         [Required]
         public int QuantityPurchased { get; set; }
+
+        [Required]
+        public decimal TotalAmount { get; set; }
     }
 }

@@ -13,22 +13,13 @@ namespace BusinessLogic
     {
         public MappingProfile()
         {
+            CreateMap<Product, ProductNomenclatureDTO>();
             CreateMap<Product, ProductReadDTO>().ReverseMap();
-
             CreateMap<ProductWriteDTO, Product>();
-                //.ForMember(dest => dest.Id, src => src.Ignore())
-                //.ForMember(dest => dest.Quantity, src => src.Ignore())
-                //.ForMember(dest => dest.Purchases, src => src.Ignore())
-                //.ForMember(dest => dest.Sales, src => src.Ignore())
-                //.ForMember(dest => dest.CreatedBy, src => src.Ignore())
-                //.ForMember(dest => dest.CreationDate, src => src.Ignore())
-                //.ForMember(dest => dest.ModifiedBy, src => src.Ignore())
-                //.ForMember(dest => dest.ModifiedDate, src => src.Ignore())
-                //.ForMember(dest => dest.IsDeleted, src => src.Ignore());
 
-            CreateMap<Sale, SaleDTO>();
-            CreateMap<Purchase, PurchaseDTO>();
-            // Add more CreateMap calls for other entity-DTO pairs
+            CreateMap<Sale, SaleReadDTO>().ReverseMap();
+
+            CreateMap<Purchase, PurchaseReadDTO>().ReverseMap();
         }
     }
 }
