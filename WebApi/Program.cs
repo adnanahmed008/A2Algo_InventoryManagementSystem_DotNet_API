@@ -1,12 +1,8 @@
-
-using AutoMapper;
 using BusinessLogic;
+using BusinessLogic.Concreate;
 using BusinessLogic.Concrete;
 using BusinessLogic.Interfaces;
-using Core.DTOs;
-using Core.Entities;
 using DataAccess;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApi
@@ -40,11 +36,12 @@ namespace WebApi
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IProductService, ProductService>();
+            builder.Services.AddTransient<IPurchaseService, PurchaseService>();
+            builder.Services.AddTransient<ISaleService, SaleService>();
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: angularAppOrigin,
-                                  policy =>
+                options.AddPolicy(name: angularAppOrigin, policy =>
                                   {
                                       policy
                                       .AllowAnyOrigin()

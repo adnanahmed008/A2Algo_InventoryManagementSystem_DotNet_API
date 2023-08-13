@@ -9,3 +9,7 @@ The backend is developed using .NET 7.
 
 ## Database
 The Microsoft SQL Server is used for data persistance.
+
+## Configuration
+In program.cs file, CORS policy is modified according to requirements.
+In Properties/launchsettings.js file, "profiles.http.applicationUrl" property value contains wildcard IP address "http://0.0.0.0:8000". Modify urls according to need.
