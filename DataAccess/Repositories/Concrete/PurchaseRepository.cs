@@ -22,6 +22,16 @@ namespace DataAccess.Repositories.Concrete
         #endregion
 
         #region | Read |
+        public Task<IEnumerable<Purchase>> GetAllByProductIdAsync(Guid productId)
+        {
+            return base.GetManyWithIncludeAsync(x => x.ProductId == productId, x => x.Product);
+        }
+
+        public new Task<IEnumerable<Purchase>> GetAllAsync()
+        {
+
+            return base.GetAllWithIncludeAsync(x => x.Product);
+        }
         #endregion
 
         #region | Update |

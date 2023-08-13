@@ -11,10 +11,10 @@ namespace DataAccess.Repositories.Interfaces
     public interface IProductRepository : IGenericRepository<Product>
     {
         #region | Create |
-        new Task<IEnumerable<Product>> GetAllAsync();
         #endregion
 
         #region | Read |
+        new Task<IEnumerable<Product>> GetAllAsync();
         #endregion
 
         #region | Update |

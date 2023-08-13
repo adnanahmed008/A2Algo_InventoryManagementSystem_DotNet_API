@@ -14,6 +14,8 @@ namespace DataAccess.Repositories.Interfaces
         #endregion
 
         #region | Read |
+        Task<IEnumerable<Sale>> GetAllByProductIdAsync(Guid productId);
+        new Task<IEnumerable<Sale>> GetAllAsync();
         #endregion
 
         #region | Update |

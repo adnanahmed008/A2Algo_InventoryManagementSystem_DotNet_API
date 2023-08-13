@@ -19,13 +19,13 @@ namespace DataAccess.Repositories.Concrete
         }
 
         #region | Create |
+        #endregion
+
+        #region | Read |
         public new Task<IEnumerable<Product>> GetAllAsync() {
 
             return base.GetAllWithIncludeAsync(x => x.Sales, x => x.Purchases);
         }
-        #endregion
-
-        #region | Read |
         #endregion
 
         #region | Update |
