@@ -15,11 +15,17 @@ namespace WebApi
     {
         public static void Main(string[] args)
         {
+            string angularAppOrigin = "IMSAngularAppOrigin";
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +41,18 @@ namespace WebApi
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddTransient<IProductService, ProductService>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: angularAppOrigin,
+                                  policy =>
+                                  {
+                                      policy
+                                      .AllowAnyOrigin()
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader();
+                                  });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,7 +65,7 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseCors(angularAppOrigin);
 
             app.MapControllers();
 
