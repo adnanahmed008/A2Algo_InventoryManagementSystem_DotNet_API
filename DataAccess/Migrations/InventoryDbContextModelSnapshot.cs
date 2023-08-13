@@ -95,6 +95,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("QuantityPurchased")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
