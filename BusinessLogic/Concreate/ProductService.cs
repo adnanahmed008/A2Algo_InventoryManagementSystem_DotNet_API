@@ -44,6 +44,14 @@ namespace BusinessLogic.Concrete
             return dtos;
         }
 
+        public async Task<IEnumerable<ProductNomenclatureDTO>> GetNomenclatureListAsync()
+        {
+            IEnumerable<Product> products = await _unitOfWork.Products.GetAllAsync();
+            IEnumerable<ProductNomenclatureDTO> dtos = _mapper.Map<IEnumerable<ProductNomenclatureDTO>>(products);
+
+            return dtos;
+        }
+
         public async Task<Result<Guid>> CreateAsync(ProductWriteDTO model)
         {
             Product product = _mapper.Map<ProductWriteDTO, Product>(model);
