@@ -27,13 +27,24 @@ namespace WebApi.Controllers
             _productService = productService;
         }
 
-        [HttpGet(Name = "GetProducts")]
-        public async Task<IEnumerable<ProductReadDTO>> Get()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductReadDTO>> GetById(Guid? id)
         {
-            return await _productService.GetAllAsync();
+            if (!id.HasValue)
+                return BadRequest();
+
+            ProductReadDTO product = await _productService.GetAsync(id.Value);
+            return Ok(product);
         }
 
-        [HttpPost(Name = "CreateProduct")]
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProductReadDTO>>> GetAll()
+        {
+            IEnumerable<ProductReadDTO> products = await _productService.GetAllAsync();
+            return Ok(products);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Create(ProductWriteDTO model)
         {
             if (!ModelState.IsValid)
@@ -57,7 +68,7 @@ namespace WebApi.Controllers
             return Ok(result.Data);
         }
 
-        [HttpPut(Name = "UpdateProduct")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, ProductWriteDTO model)
         {
             if (!ModelState.IsValid)
@@ -78,11 +89,11 @@ namespace WebApi.Controllers
             if (result.HasError)
                 return StatusCode(StatusCodes.Status500InternalServerError, result.Code);
 
-            return Ok(result.Data);
+            return Ok();
         }
 
 
-        [HttpDelete(Name = "DeleteProduct")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (!id.HasValue)
