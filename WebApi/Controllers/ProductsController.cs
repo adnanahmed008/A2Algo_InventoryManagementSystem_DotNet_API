@@ -9,7 +9,7 @@ using System.Net;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly ILogger<ProductsController> _logger;
@@ -41,6 +41,14 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<ProductReadDTO>>> GetAll()
         {
             IEnumerable<ProductReadDTO> products = await _productService.GetAllAsync();
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("Nomenclatures")]
+        public async Task<ActionResult<IEnumerable<ProductNomenclatureDTO>>> GetNomenclatureList()
+        {
+            IEnumerable<ProductNomenclatureDTO> products = await _productService.GetNomenclatureListAsync();
             return Ok(products);
         }
 
